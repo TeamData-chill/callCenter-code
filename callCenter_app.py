@@ -4,17 +4,20 @@
 #cd \Globokas\ScoringPython
 #cd \Red Comercial\AutomatizaciónTrx\Procesos Plantillas\PythonProcesos\Web_Streamlit_Python_Mongo
 
+import ssl
 import streamlit as st
 from pymongo import MongoClient, errors
 from datetime import datetime, timedelta
 
 # Conectar a MongoDB
 try:
-    client = MongoClient("mongodb+srv://mhuaman:0AcY7h5YMFqWCvRS@innova.gfmnmzd.mongodb.net/?retryWrites=true&w=majority&appName=Innova")
-    db = client["mhuaman"]
-    users_collection = db["usuarios"]  # Colección que contiene RUC y códigos
-    tiendas_collection = db["tb_tiendas"]
-except errors.ConnectionError:
+    client = MongoClient("mongodb+srv://datayanalitica:hDeF35XYwRgMgrT4@searchengine.qcnlr.mongodb.net/?retryWrites=true&w=majority&appName=SearchEngine",
+                        tls=True,
+                        serverSelectionTimeoutMS=5000)
+    db = client["search_engine"]
+    users_collection = db["users"]  # Colección que contiene RUC y códigos
+    tiendas_collection = db["oz_search"]
+except errors.ServerSelectionTimeoutError:
     st.error("No se pudo conectar a MongoDB. Verifique la URL y las credenciales.")
     st.stop()
 
@@ -60,72 +63,73 @@ st.markdown(
 
 # Definir los nombres de los campos
 field_names = {
-    "idCodigo": "Id agente",
+    "id_codigo": "Id agente",
     "Tienda": "Comercio",
-    "Coordinador": "Coordinador",
-    "Zona": "Zona",
+    "coordinador": "Coordinador",
+    "ZONA": "Zona",
     "TipoPGY": "PAGAYA",
 
-    "trxPGYDic": "Diciembre 23",
-    "trxPGYEne": "Enero 24",
-    "trxPGYFeb": "Febrero 24",
-    "trxPGYMar": "Marzo 24",
-    "trxPGYAbr": "Abril 24",
-    "trxPGYMay": "Mayo 24",
-    "trxPGYJun": "Junio 24",
-    "trxPGYJul": "Julio 24",
-    "trxPGYAgt": "Agosto 24",
-    "trxPGYSept": "Septiembre 24",
-    "trxPGYOct": "Octubre 24",
-    "trxPGYNov": "Noviembre 24",
-    "trxPGYActual": "PGY Actual",
+    "202402_PGY": "Febrero 24",
+    "202403_PGY": "Marzo 24",
+    "202404_PGY": "Abril 24",
+    "202405_PGY": "Mayo 24",
+    "202406_PGY": "Junio 24",
+    "202407_PGY": "Julio 24",
+    "202408_PGY": "Agosto 24",
+    "202409_PGY": "Septiembre 24",
+    "202410_PGY": "Octubre 24",
+    "202411_PGY": "Noviembre 24",
+    "202412_PGY": "Diciembre 24",
+    "202501_PGY": "Enero 25",
+    "202502_PGY": "Febrero 25",
     
     "idPGY": "Terminal PGY",
     "Provincia": "Provincia",
     "Distrito": "Distrito",
-    "Categoría": "Categoría",
-    "Operador Zonal": "Operador Zonal",
-    "Tipo_Agente": "KASNET",
+    "categoria": "Categoría",
+    "RESPONSABLE DE ZONA (OZ)": "Operador Zonal",
+    "TipoAgente": "KASNET",
     
-    "Dic_23_Kas": "Diciembre 23",
-    "Ene_24_Kas": "Enero 24",
-    "Feb_24_Kas": "Febrero 24",
-    "Mar_24_Kas": "Marzo 24",
-    "Abr_24_Kas": "Abril 24",
-    "May_24_Kas": "Mayo 24",
-    "Jun_24_Kas": "Junio 24",
-    "Jul_24_Kas": "Julio 24",
-    "Agt_24_Kas": "Agosto 24",
-    "Sept_24_Kas": "Septiembre 24",
-    "Oct_24_Kas": "Octubre 24",
-    "Nov_24_Kas": "Noviembre 24",
-    "KasActual": "Kasnet Actual",
+    "202402_Kas": "Febrero 24",
+    "202403_Kas": "Marzo 24",
+    "202404_Kas": "Abril 24",
+    "202405_Kas": "Mayo 24",
+    "202406_Kas": "Junio 24",
+    "202407_Kas": "Julio 24",
+    "202408_Kas": "Agosto 24",
+    "202409_Kas": "Septiembre 24",
+    "202410_Kas": "Octubre 24",
+    "202411_Kas": "Noviembre 24",
+    "202412_Kas": "Diciembre 24",
+    "202501_Kas": "Enero 25",
+    "202502_Kas": "Kasnet Actual",
 
     "EstadoPGY":"EstadoPGY",
     "Nro Contómetros":"Contómetros (Unidad)",
     "Estado":"Situación",
 
     "Departamento": "Departamento",
-    "Región": "Región",
-    "Supervisor": "Nombre del Supervisor",
+    "region": "Región",
+    "ZONAL": "Nombre del Supervisor",
     "Motivo_Garantía": "Motivo de Garantía",
     "Monto_Garantía": "Monto de Garantía",
     "Alcance_Trx_Kasnet":"Trx Garantía",
     "Status_Garantia":"Status_Garantia",
 
-    "Dic_23": "Total Dic 23",
-    "En_24": "Total Ene 24",
-    "Feb_24": "Total Feb 24",
-    "Mar_24": "Total Mar 24",
-    "Abr_24": "Total Abr 24",
-    "May_24": "Total May 24",
-    "Jun_24": "Total Jun 24",
-    "Jul_24": "Total Jul 24",
-    "Agt_24": "Total Agt 24",
-    "Spt_24": "Total Spt 24",
-    "Oct_24": "Total Oct 24",
-    "nov_24": "Total Nov 24",
-    "avanActual": "Total Dic"
+    
+    "202402": "Total Feb 24",
+    "202403": "Total Mar 24",
+    "202404": "Total Abr 24",
+    "202405": "Total May 24",
+    "202406": "Total Jun 24",
+    "202407": "Total Jul 24",
+    "202408": "Total Agt 24",
+    "202409": "Total Spt 24",
+    "202410": "Total Oct 24",
+    "202411": "Total Nov 24",
+    "202412": "Total Dic 24",
+    "202501": "Total Ene 25",
+    "202502": "Total Feb 25"
 
 }
 
@@ -154,24 +158,23 @@ if st.session_state.logged_in:
     id_codigo = st.text_input(Texto, placeholder="Código", max_chars=6, key='id_codigo')
 
     if id_codigo.isdigit() and len(id_codigo) < 10:
-        result = tiendas_collection.find_one({"idCodigo": id_codigo})
+        result = tiendas_collection.find_one({"id_codigo": id_codigo})
         if result:
             # Dividir los campos en tres grupos
             fields_col1 = [
-                "idCodigo", "Tienda", "Categoría", "Región", "Zona", "Operador Zonal", "TipoPGY",
-                "trxPGYDic", "trxPGYEne", "trxPGYFeb", "trxPGYMar", "trxPGYAbr", "trxPGYMay",
-                "trxPGYJun", "trxPGYJul",  "trxPGYAgt", "trxPGYSept","trxPGYOct", "trxPGYNov", "trxPGYActual"
+                "id_codigo","Tienda","categoria","region","ZONA","RESPONSABLE DE ZONA (OZ)","TipoPGY",
+                "202402_PGY","202403_PGY","202404_PGY","202405_PGY","202406_PGY","202407_PGY",
+                "202408_PGY","202409_PGY","202410_PGY","202411_PGY","202412_PGY","202501_PGY","202502_PGY"
             ]
             fields_col2 = [
-                "idPGY","EstadoPGY","Coordinador", "Supervisor","Tipo_Agente",
-                "Dic_23_Kas", "Ene_24_Kas", "Feb_24_Kas", "Mar_24_Kas", "Abr_24_Kas", "May_24_Kas", 
-                "Jun_24_Kas", "Jul_24_Kas", "Agt_24_Kas", "Sept_24_Kas","Oct_24_Kas","Nov_24_Kas","KasActual"
+                "idPGY","EstadoPGY","coordinador", "ZONAL","TipoAgente",
+                "202402_Kas","202403_Kas","202404_Kas","202405_Kas","202406_Kas",
+                "202407_Kas","202408_Kas","202409_Kas","202410_Kas","202411_Kas","202412_Kas","202501_Kas","202502_Kas"
             ]
             fields_col3 = [
                 "Departamento", "Provincia", "Distrito", "Motivo_Garantía", "Monto_Garantía","Nro Contómetros","Estado",
-                "Alcance_Trx_Kasnet","Status_Garantia","Dic_23","En_24",
-                "Feb_24", "Mar_24", "Abr_24", "May_24", "Jun_24", "Jul_24","Agt_24","Spt_24", "Oct_24","nov_24",
-                "avanActual"
+                "Alcance_Trx_Kasnet","Status_Garantia","202402","202403","202404","202405","202406","202407","202408",
+                "202409","202410","202411","202412","202501","202502"
             ]
 
 
