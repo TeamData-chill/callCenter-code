@@ -119,9 +119,15 @@ if st.session_state.logged_in:
             region = result.get("region","N/A")
             st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {region}</div>", unsafe_allow_html=True)
             display_name = 'Zona'
-            zona = result.get("zona","N/A")
+            zona = result.get("ZONA","N/A")
             st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {zona}</div>", unsafe_allow_html=True)
             display_name = 'Supervisor'
+            supervisor = result.get("RESPONSABLE","N/A")
+            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
+            display_name = 'Saldo inicial Kasnet (S/)'
+            supervisor = result.get("RESPONSABLE","N/A")
+            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
+            display_name = 'Saldo inicial PGY (S/)'
             supervisor = result.get("RESPONSABLE","N/A")
             st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
 
