@@ -97,23 +97,24 @@ if st.session_state.logged_in:
                 "Saldo inicial PGY (S/)": result.get('saldosPGY', 'N/A'),
 
                 "----------------------------------------------------<br>"
-                "Trx Sept": f"PGY:{result.get('202409_PGY', 'N/A')}  Kas:{result.get('202409_Kas', 'N/A')}  Total:{result.get('202409', 'N/A')}",
-                "Trx Oct": f"PGY:{result.get('202410_PGY', 'N/A')}  Kas:{result.get('202410_Kas', 'N/A')}  Total:{result.get('202410', 'N/A')}",
-                "Trx Nov": f"PGY:{result.get('202411_PGY', 'N/A')}  Kas:{result.get('202411_Kas', 'N/A')}  Total:{result.get('202411', 'N/A')}",
+                "Trx Dic": f"PGY:{result.get('202412_PGY', 'N/A')}  Kas:{result.get('202412_Kas', 'N/A')}  Total:{result.get('202412', 'N/A')}",
+                "Trx Ene": f"PGY:{result.get('202501_PGY', 'N/A')}  Kas:{result.get('202501_Kas', 'N/A')}  Total:{result.get('202501', 'N/A')}",
+                "Trx Feb": f"PGY:{result.get('202502_PGY', 'N/A')}  Kas:{result.get('202502_Kas', 'N/A')}  Total:{result.get('202502', 'N/A')}",
                 
-                f"----------------------------------------------------<br>Trx PGY Regular {fecha_ayer}": result.get('202412_PGY_sin_inter', 'N/A'),
-                f"Trx PGY Interoperabilidad {fecha_ayer}": result.get('202412_PGY_inter', 'N/A'),
-                f"Total {fecha_ayer}": f"{result.get('202412_PGY', 'N/A')}",
+                f"----------------------------------------------------<br>Trx PGY Regular {fecha_ayer}": result.get('202502_PGY_sin_inter', 'N/A'),
+                f"Trx PGY Interoperabilidad {fecha_ayer}": result.get('202502_PGY_inter', 'N/A'),
+                f"Total {fecha_ayer}": f"{result.get('202502_PGY', 'N/A')}",
 
                 f"----------------------------------------------------<br>Trx Banco Nación ({fecha_ayer})": f" ({result.get('ESTADO_BN', 'N/A')}) {fecha_ayer}: {result.get('ACTUAL_Kas_BN', 'N/A')}",
 
                 f"Trx Kasnet Regular {fecha_ayer}": f"{result.get('ACTUAL_Kas_sin_BN', 'N/A')}",
-                f"Total Kasnet {fecha_ayer}": f"{result.get('202412_Kas', 'N/A')}",
+                f"Total Kasnet {fecha_ayer}": f"{result.get('202502_Kas', 'N/A')}",
                 
-                f"----------------------------------------------------<br>Compartivo diario / Nov vs Dic<br>Avance {fecha_ayer}": result.get('Avance_antes', 'N/A'),
-                f"Avance {fecha_ayer}": result.get('202412', 'N/A'),
-                "Proyectado Dic": result.get('Proyeccion', 'N/A'),
-                f"Variación Nov vs Dic": f"{result.get('Diferencia_Ultimos_Meses', 'N/A')}%",
+                # f"----------------------------------------------------<br>Compartivo diario / Ene vs Feb<br>Avance {fecha_ayer}": result.get('Avance_antes', 'N/A'),
+                f"----------------------------------------------------<br>Compartivo diario / Ene vs Feb<br>"
+                f"Avance {fecha_ayer}": result.get('202502', 'N/A'),
+                "Proyectado Feb": result.get('Proyeccion', 'N/A'),
+                f"Variación Ene vs Feb": f"{result.get('Diferencia_Ultimos_Meses', 'N/A')}%",
                 "¿Visitó en el mes?": result.get('¿Visitó_Mes_Actual?', 'N/A'),
             }
 
