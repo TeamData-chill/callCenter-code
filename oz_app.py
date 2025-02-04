@@ -51,9 +51,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-print('session_state',st.session_state)
-if 'logged_in' not in st.session_state:
-    st.session_state.logged_in = False
+
 
 def authenticate_user(dni):
     user = users_login.find_one({"dni": dni})
@@ -62,8 +60,15 @@ def authenticate_user(dni):
 def change_state():
     st.session_state.logged_in = True
 
+hoy = datetime.now()
+fecha_ayer =  (hoy - timedelta(days=1)).strftime("%d-%m-%Y")
 text = "**MI SOCIO KASNET**"
-dni = st.text_input(text,placeholder="Ingrese su DNI y acredítese", max_chars=8)
+
+
+
+print('session_state',st.session_state)
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
 
 if st.session_state.logged_in:
     st.success(f"Bienvenido! Ahora puede realizar consultas")
@@ -71,52 +76,8 @@ if st.session_state.logged_in:
 
     if id_codigo.isdigit() and len(id_codigo) < 10:
         result = tiendas_collection.find_one({"id_codigo": id_codigo})
-        print("result",result)
-        if result:
-            
-            fecha_ayer = '2025-02-02'
-            # display_name = 'Código'
-            # value =  result.get("id_codigo", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            # display_name = 'Estado'
-            # value =  result.get("estado_kasnet", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            # display_name = 'Terminal PGY'
-            # value =  result.get("idPGY", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            # display_name = 'Comercio'
-            # value =  result.get("Tienda", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            # display_name = 'RUC'
-            # value =  result.get("RUC", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            # display_name = 'Titular'
-            # value =  result.get("titular", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            # display_name = 'Ubicación'
-            # departamento =  result.get("Departamento", "N/A")
-            # provincia =  result.get("Provincia", "N/A")
-            # distrito =  result.get("Distrito", "N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {departamento} - {provincia} - {distrito}</div>", unsafe_allow_html=True)
-            # display_name = 'Región'
-            # region = result.get("region","N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {region}</div>", unsafe_allow_html=True)
-            # display_name = 'Zona'
-            # zona = result.get("ZONA","N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {zona}</div>", unsafe_allow_html=True)
-            # display_name = 'Supervisor'
-            # supervisor = result.get("RESPONSABLE","N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
-            
-            # display_name = 'Saldo inicial Kasnet (S/)'
-            # saldo_kasnet = result.get("Saldo_kasnet","N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {saldo_kasnet}</div>", unsafe_allow_html=True)
-            # display_name = 'Recarga Prom. Kasnet (S/)'
-            # recarga = result.get("Recarga promedio kas","N/A")
-            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {recarga}</div>", unsafe_allow_html=True)
-            # display_name = 'Saldo inicial PGY (S/)'
-            # saldo_pagaya = result.get("saldosPGY","N/A")
 
+        if result:
             concatenations = {
 
                 "Código": f"{result.get('id_codigo', 'N/A')} - {result.get('TipoAgente', 'N/A')} - {result.get('categoria', 'N/A')}",
@@ -155,7 +116,9 @@ if st.session_state.logged_in:
                 f"Variación Nov vs Dic": f"{result.get('Diferencia_Ultimos_Meses', 'N/A')}%",
                 "¿Visitó en el mes?": result.get('¿Visitó_Mes_Actual?', 'N/A'),
             }
-            st.markdown(f"<div class='stWrite'>{concatenations}</div>", unsafe_allow_html=True)
+
+            for key, value in concatenations.items():
+                st.markdown(f"<div class='stWrite'><strong>{key}:</strong> <b>{value}</b></div>", unsafe_allow_html=True)
 
         else:
             st.error("No se encontró ninguna tienda con el código proporcionado")
@@ -164,9 +127,8 @@ if st.session_state.logged_in:
             st.error("El código debe ser numérico")
         elif len(id_codigo) != 6 and len(id_codigo) != 9 :
             st.error("El código debe tener exactamente 6 o 9 dígitos")
-    
-
 else:
+    dni = st.text_input(text,placeholder="Ingrese su DNI y acredítese", max_chars=8)
     if st.button("Verificar autenticidad de DNI",on_click=change_state):
         if dni.isdigit() and len(dni) == 8:
             if authenticate_user(dni):
