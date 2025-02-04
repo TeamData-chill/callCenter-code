@@ -65,71 +65,97 @@ def change_state():
 text = "**MI SOCIO KASNET**"
 dni = st.text_input(text,placeholder="Ingrese su DNI y acredítese", max_chars=8)
 
-field_names = {
-    "id_codigo": "Código",
-    "estado_kasnet": "Estado",
-    "idPGY": "Terminal PGY",
-    "Tienda": "Comercio",
-    "RUC": "RUC",
-    "titular": "Titular",
-    "id_codigo": "Ubicación",
-    "id_codigo": "Coordenadas",
-    "id_codigo": "Región",
-    "id_codigo": "Zona",
-    "id_codigo": "Supervisor",
-    "id_codigo": "OZ",
-    "id_codigo": "Saldo inicial Kasnet (S/)",
-    "id_codigo": "Recarga Prom. Kasnet (S/):",
-    "id_codigo": "Saldo inicial PGY (S/)"
-}
-
-
 if st.session_state.logged_in:
     st.success(f"Bienvenido! Ahora puede realizar consultas")
     id_codigo = st.text_input("", placeholder="Ingrese el código de 6 o 9 dígitos a buscar", max_chars=9, key='id_codigo')
 
     if id_codigo.isdigit() and len(id_codigo) < 10:
         result = tiendas_collection.find_one({"id_codigo": id_codigo})
+        print("result",result)
         if result:
             
-            display_name = 'Código'
-            value =  result.get("id_codigo", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            display_name = 'Estado'
-            value =  result.get("estado_kasnet", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            display_name = 'Terminal PGY'
-            value =  result.get("idPGY", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            display_name = 'Comercio'
-            value =  result.get("Tienda", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            display_name = 'RUC'
-            value =  result.get("RUC", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            display_name = 'Titular'
-            value =  result.get("titular", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
-            display_name = 'Ubicación'
-            departamento =  result.get("Departamento", "N/A")
-            provincia =  result.get("Provincia", "N/A")
-            distrito =  result.get("Distrito", "N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {departamento} - {provincia} - {distrito}</div>", unsafe_allow_html=True)
-            display_name = 'Región'
-            region = result.get("region","N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {region}</div>", unsafe_allow_html=True)
-            display_name = 'Zona'
-            zona = result.get("ZONA","N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {zona}</div>", unsafe_allow_html=True)
-            display_name = 'Supervisor'
-            supervisor = result.get("RESPONSABLE","N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
-            display_name = 'Saldo inicial Kasnet (S/)'
-            supervisor = result.get("RESPONSABLE","N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
-            display_name = 'Saldo inicial PGY (S/)'
-            supervisor = result.get("RESPONSABLE","N/A")
-            st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
+            fecha_ayer = '2025-02-02'
+            # display_name = 'Código'
+            # value =  result.get("id_codigo", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
+            # display_name = 'Estado'
+            # value =  result.get("estado_kasnet", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
+            # display_name = 'Terminal PGY'
+            # value =  result.get("idPGY", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
+            # display_name = 'Comercio'
+            # value =  result.get("Tienda", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
+            # display_name = 'RUC'
+            # value =  result.get("RUC", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
+            # display_name = 'Titular'
+            # value =  result.get("titular", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {value}</div>", unsafe_allow_html=True)
+            # display_name = 'Ubicación'
+            # departamento =  result.get("Departamento", "N/A")
+            # provincia =  result.get("Provincia", "N/A")
+            # distrito =  result.get("Distrito", "N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {departamento} - {provincia} - {distrito}</div>", unsafe_allow_html=True)
+            # display_name = 'Región'
+            # region = result.get("region","N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {region}</div>", unsafe_allow_html=True)
+            # display_name = 'Zona'
+            # zona = result.get("ZONA","N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {zona}</div>", unsafe_allow_html=True)
+            # display_name = 'Supervisor'
+            # supervisor = result.get("RESPONSABLE","N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {display_name}</div>", unsafe_allow_html=True)
+            
+            # display_name = 'Saldo inicial Kasnet (S/)'
+            # saldo_kasnet = result.get("Saldo_kasnet","N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {saldo_kasnet}</div>", unsafe_allow_html=True)
+            # display_name = 'Recarga Prom. Kasnet (S/)'
+            # recarga = result.get("Recarga promedio kas","N/A")
+            # st.markdown(f"<div class='stWrite'><strong>{display_name}:</strong> {recarga}</div>", unsafe_allow_html=True)
+            # display_name = 'Saldo inicial PGY (S/)'
+            # saldo_pagaya = result.get("saldosPGY","N/A")
+
+            concatenations = {
+
+                "Código": f"{result.get('id_codigo', 'N/A')} - {result.get('TipoAgente', 'N/A')} - {result.get('categoria', 'N/A')}",
+                "Estado": f"{result.get('estado_kasnet', 'N/A')} - {result.get('FechaInstalacion', 'N/A')}",
+                "Terminal PGY": f"{result.get('idPGY', 'N/A')}  - {result.get('EstadoPGY', 'N/A')}",
+                "Comercio": f"{result.get('Tienda', 'N/A')}",
+                "RUC": result.get('RUC', 'N/A'),
+                "Titular": result.get('titular', 'N/A'),
+                "Ubicación": f"{result.get('Departamento', 'N/A')} - {result.get('Provincia', 'N/A')} - {result.get('Distrito', 'N/A')}",
+                "Coordenadas": f'<a href="https://www.google.com/maps/search/?api=1&query={result.get("Latitude", "N/A")},{result.get("Longitude", "N/A")}" target="_blank">Ver en Google Maps</a>',
+                "Región": result.get('region', 'N/A'),
+                "Zona": result.get('ZONA', 'N/A'),
+                "Supervisor": result.get('ZONAL', 'N/A'),
+                "OZ": result.get('RESPONSABLE DE ZONA (OZ)', 'N/A'),
+                "Saldo inicial Kasnet (S/)": result.get('Saldo_kasnet', 'N/A'),
+                "Recarga Prom. Kasnet (S/)": result.get('Recarga promedio kas', 'N/A'),
+                "Saldo inicial PGY (S/)": result.get('saldosPGY', 'N/A'),
+
+                "----------------------------------------------------<br>"
+                "Trx Sept": f"PGY:{result.get('202409_PGY', 'N/A')}  Kas:{result.get('202409_Kas', 'N/A')}  Total:{result.get('202409', 'N/A')}",
+                "Trx Oct": f"PGY:{result.get('202410_PGY', 'N/A')}  Kas:{result.get('202410_Kas', 'N/A')}  Total:{result.get('202410', 'N/A')}",
+                "Trx Nov": f"PGY:{result.get('202411_PGY', 'N/A')}  Kas:{result.get('202411_Kas', 'N/A')}  Total:{result.get('202411', 'N/A')}",
+                
+                f"----------------------------------------------------<br>Trx PGY Regular {fecha_ayer}": result.get('202412_PGY_sin_inter', 'N/A'),
+                f"Trx PGY Interoperabilidad {fecha_ayer}": result.get('202412_PGY_inter', 'N/A'),
+                f"Total {fecha_ayer}": f"{result.get('202412_PGY', 'N/A')}",
+
+                f"----------------------------------------------------<br>Trx Banco Nación ({fecha_ayer})": f" ({result.get('ESTADO_BN', 'N/A')}) {fecha_ayer}: {result.get('ACTUAL_Kas_BN', 'N/A')}",
+
+                f"Trx Kasnet Regular {fecha_ayer}": f"{result.get('ACTUAL_Kas_sin_BN', 'N/A')}",
+                f"Total Kasnet {fecha_ayer}": f"{result.get('202412_Kas', 'N/A')}",
+                
+                f"----------------------------------------------------<br>Compartivo diario / Nov vs Dic<br>Avance {fecha_ayer}": result.get('Avance_antes', 'N/A'),
+                f"Avance {fecha_ayer}": result.get('202412', 'N/A'),
+                "Proyectado Dic": result.get('Proyeccion', 'N/A'),
+                f"Variación Nov vs Dic": f"{result.get('Diferencia_Ultimos_Meses', 'N/A')}%",
+                "¿Visitó en el mes?": result.get('¿Visitó_Mes_Actual?', 'N/A'),
+            }
+            st.markdown(f"<div class='stWrite'>{concatenations}</div>", unsafe_allow_html=True)
 
         else:
             st.error("No se encontró ninguna tienda con el código proporcionado")
