@@ -202,7 +202,7 @@ else:
     codigo = st.text_input("",placeholder="Ingrese su contraseña", max_chars=20, type="password")
 
     if st.button("Acceder y Confirmar"):
-        if ruc.isdigit() and codigo.isdigit() and len(ruc) == 2 and len(codigo) == 3:
+        if len(codigo) < 20:
             if authenticate_user(ruc, codigo):
                 st.session_state.logged_in = True
                 st.success("¡Conexión exitosa! Por seguridad, presione nuevamente el botón 'Acceder y Confirmar'")
