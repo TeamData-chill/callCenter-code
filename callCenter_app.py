@@ -198,8 +198,8 @@ else:
     # Mostrar formulario de login si el usuario no ha iniciado sesión
     st.markdown("<h2 style='text-align: center;'>Inicio de Sesión</h2>", unsafe_allow_html=True)
 
-    ruc = st.text_input("",placeholder="Ingrese su RUC", max_chars=2)
-    codigo = st.text_input("",placeholder="Ingrese su id de 3 dígitos", max_chars=3, type="password")
+    ruc = st.text_input("",placeholder="Ingrese su usuario", max_chars=10)
+    codigo = st.text_input("",placeholder="Ingrese su contraseña", max_chars=12, type="password")
 
     if st.button("Acceder y Confirmar"):
         if ruc.isdigit() and codigo.isdigit() and len(ruc) == 2 and len(codigo) == 3:
