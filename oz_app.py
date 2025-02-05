@@ -116,6 +116,9 @@ if st.session_state.logged_in:
                 "Proyectado Feb": result.get('Proyeccion', 'N/A'),
                 f"Variación Ene vs Feb": f"{result.get('Diferencia_Ultimos_Meses', 'N/A')}%",
                 "¿Visitó en el mes?": result.get('¿Visitó_Mes_Actual?', 'N/A'),
+
+                "----------------------------------------------------<br>"
+                "CAMPAÑA FEBRERO": result.get('CAMPAÑA_FEBRERO', 'N/A'),
             }
 
             for key, value in concatenations.items():
